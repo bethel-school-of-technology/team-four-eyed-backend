@@ -2,17 +2,20 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Trainers extends Model {
-    static associate(models) {
-      this.hasMany(models.Articles, {
-        foreignKey: 'id'
-      })
-    } 
   };
 
   Trainers.init({
-    firstName: {
+      trainerId:{
+        type: DataTypes.INTEGER,
+        autoincrement: true,
+        primaryKey: true,
+        allowNull: true
+      },
+      
+      firstName: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -24,11 +27,13 @@ module.exports = (sequelize, DataTypes) => {
 
     username: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     },
 
     password: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     }
 

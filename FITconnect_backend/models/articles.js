@@ -3,15 +3,31 @@ const {
   Model
 } = require('sequelize');
 
+
 module.exports = (sequelize, DataTypes) => {
   class Articles extends Model {
-    static associate(models) {
-      this.belongsTo(models.Trainers);
-    }
   };
+
   Articles.init({
-    title: DataTypes.STRING,
-    body: DataTypes.STRING
+    articleId: {
+      type:DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false
+    },
+      title: {
+      type:DataTypes.STRING,
+      unique: true,
+      allowNull: false
+    },
+    body: {
+      type:DataTypes.STRING,
+      allowNull: false
+    },
+    trainerId: {
+      type:DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Articles',
