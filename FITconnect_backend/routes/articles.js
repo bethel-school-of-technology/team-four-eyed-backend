@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const {Articles} = require("../models");
+var auth = require('../services/auth');
+
 
 /* GET return all articles */
 router.get('/', function(req, res, next) {
@@ -13,7 +15,7 @@ router.get('/', function(req, res, next) {
   })  
 });
 
-/*GET/:id get individual article*/
+/*GET/:id get individual article*/ 
 router.get('/:id', (req, res, next) => {
   const articleId = parseInt(req.params.id);
 
@@ -34,6 +36,24 @@ router.get('/:id', (req, res, next) => {
 
 /* POST create a article */
 router.post('/', async (req, res, next) => {
+  //get token from request
+  
+  const header = req.headers.authorization;
+ 
+  if (!header) {
+    req.status(403).send();
+    return;
+  }
+
+  const token = header.split(' ') [1] 
+
+  // validate token / get the user
+  const user = auth.verifyUser(token);
+
+  if (!user) {
+    res.status(403).send();
+      return;
+  }
 
   let [result, created] = await Articles.findOrCreate({
     where: {

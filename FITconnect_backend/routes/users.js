@@ -3,6 +3,7 @@ const { User } = require('../models');
 var router = express.Router();
 var bcrypt = require('bcrypt');
 var auth = require('../services/auth');
+var authService = require('../services/auth');
 
 
 // POST User
