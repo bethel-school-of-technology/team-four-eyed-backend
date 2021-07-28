@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var models = require('./models');
+const mysql = require('mysql');
 
 //var indexRouter = require('./routes/index');
 var articlesRouter = require('./routes/articles'); 
@@ -21,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-models.sequelize.sync().then(function () {
+models.sequelize.sync({alter:true}).then(function () {
   console.log("DB Sync'd up")
 });
 
