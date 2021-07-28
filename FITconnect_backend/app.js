@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var models = require('./models');
 const mysql = require('mysql');
+var bcrypt = require('bcrypt');
 
 //var indexRouter = require('./routes/index');
 var articlesRouter = require('./routes/articles'); 
