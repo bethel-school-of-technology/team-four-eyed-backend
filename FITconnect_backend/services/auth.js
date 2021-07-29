@@ -4,7 +4,7 @@ const { Trainers } = require('../models');
 const secretKey = 'traineveryday';
 
 module.exports = {
-    createJWT: (user) => {
+    createJWT: (trainers) => {
         const token = jwt.sign({
             username: trainers.username,
             id: trainers.id
