@@ -6,7 +6,7 @@ var auth = require('../services/auth');
 var authService = require('../services/auth');
 
 
-// POST User
+// POST Trainer
 router.post('/', async (req, res, next) => {
 
   if (req.body.username || !req.body.password) {
@@ -20,13 +20,13 @@ router.post('/', async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
 
-  User.create({
+  Trainers.create({
     username: req.body.username,
     password: req.body.password
-  }).then(newUser => {
+  }).then(newTrainer => {
     res.json({
-      id: newUser.id,
-      username: newUser.username
+      id: newTrainer.id,
+      username: newTrainer.username
     });
 
   }).catch(() => {
@@ -52,17 +52,12 @@ router.post('/', async (req, res, next) => {
       if (valid) {
         // create the token
         const jwt = auth.createJWT(user);
-        res.status(200).send( jwt );
+        res.status(200).send({ jwt });
       } else {
         res.status(401).send('Invalid password');
       } 
-
     });
-
   });
-
 });
-
-
 
   module.exports = router;
