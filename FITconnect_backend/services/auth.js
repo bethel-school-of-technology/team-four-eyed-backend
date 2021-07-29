@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { Trainers } = require('../models');
 
 const secretKey = 'traineveryday';
 
 module.exports = {
     createJWT: (user) => {
         const token = jwt.sign({
-            username: user.username,
-            id: user.id
+            username: trainers.username,
+            id: trainers.id
         },
         secretKey,
         {
@@ -19,8 +19,7 @@ module.exports = {
     },
     verifyUser: (token) => {
         const decodedPayload = jwt.verify(token, secretKey);
-        
-        return User.findByPk(decodedPayload.id);
+        return Trainers.findByPk(decodedPayload.id);
     }, catch (err) {
         console.log(err);
         return null;

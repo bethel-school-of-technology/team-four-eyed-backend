@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const {Articles} = require("../models");
+const articles = require('../models/articles');
 var auth = require('../services/auth');
 
 
@@ -36,21 +37,10 @@ router.get('/:id', (req, res, next) => {
 
 /* POST create a article */
 router.post('/', async (req, res, next) => {
-  //get token from request
-  
-  const header = req.headers.authorization;
- 
-  if (!header) {
-    req.status(403).send();
-    return;
-  }
 
-  const token = header.split(' ') [1] 
+  const trainers = req.trainers;
 
-  // validate token / get the user
-  const user = auth.verifyUser(token);
-
-  if (!user) {
+  if (!articles) {
     res.status(403).send();
       return;
   }
@@ -82,6 +72,13 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const articleId = parseInt(req.params.id);
 
+  const trainers = req.trainers;
+
+  if (!articles) {
+    res.status(403).send();
+      return;
+  }
+
   if (!articleId || articleId <= 0) {
     res.status(400).send('Invalid ID');
     return;
@@ -105,6 +102,14 @@ router.put('/:id', (req, res, next) => {
 
 /* DELETE delete a article */
 router.delete("/:id", async (req, res, next) => {
+  
+  const trainers = req.trainers;
+
+  if (!articles) {
+    res.status(403).send();
+      return;
+  }
+
   let [result] = await Articles.destroy({
       where: { articleId: articleId }
     })

@@ -6,10 +6,10 @@ var logger = require('morgan');
 var models = require('./models');
 const mysql = require('mysql');
 var bcrypt = require('bcrypt');
+var auth = require('./services/auth');
 
-//var indexRouter = require('./routes/index');
 var articlesRouter = require('./routes/articles'); 
-var usersRouter = require('./routes/users');
+var trainersRouter = require('./routes/trainers');
 
 var app = express();
 
@@ -27,9 +27,29 @@ models.sequelize.sync({alter:true}).then(function () {
   console.log("DB Sync'd up")
 });
 
+app.use(async (req,res, next) => {
+  const header = req.headers.authorization;
+
+if (!header) {
+  return next();
+}
+
+const token = header.split(' ') [1] 
+
+ // validate token / get the user
+const trainers = await auth.verifyUser(token);
+
+req.trainers= trainers;
+next();
+
+// if (!trainers) {
+//   res.status(403).send();
+//     return;
+// }
+});
+
 app.use('/articles', articlesRouter);
-//app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/trainers', trainersRouter);
 
 
 module.exports = app;
