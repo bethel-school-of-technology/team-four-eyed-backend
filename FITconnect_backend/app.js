@@ -38,14 +38,9 @@ const token = header.split(' ') [1]
 
  // validate token / get the user
 const trainers = await auth.verifyUser(token);
-
 req.trainers= trainers;
 next();
 
-// if (!trainers) {
-//   res.status(403).send();
-//     return;
-// }
 });
 
 app.use('/articles', articlesRouter);

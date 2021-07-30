@@ -11,18 +11,18 @@ module.exports = {
         },
         secretKey,
         {
-            expiresIn: '1h'
+            expiresIn: '1hr'
         });
 
         return token;
 
     },
     verifyUser: (token) => {
-        const decodedPayload = jwt.verify(token, secretKey);
-        return Trainers.findByPk(decodedPayload.id);
-    }, catch (err) {
-        console.log(err);
-        return null;
-    }
-    
+        try {
+            const decodedPayload = jwt.verify(token, secretKey);
+            return Trainers.findByPk(decodedPayload.id);
+        }catch (err) {
+            return null;
+    } 
+    }    
 }; 

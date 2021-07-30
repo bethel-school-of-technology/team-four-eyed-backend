@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const {Articles} = require("../models");
-const articles = require('../models/articles');
-var auth = require('../services/auth');
+//var auth = require('../services/auth');
 
 
 /* GET return all articles */
@@ -40,7 +39,7 @@ router.post('/', async (req, res, next) => {
 
   const trainers = req.trainers;
 
-  if (!articles) {
+  if (!trainers) {
     res.status(403).send();
       return;
   }
@@ -72,16 +71,16 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const articleId = parseInt(req.params.id);
 
-  const trainers = req.trainers;
-
-  if (!articles) {
-    res.status(403).send();
-      return;
-  }
-
   if (!articleId || articleId <= 0) {
     res.status(400).send('Invalid ID');
     return;
+  }
+
+  const trainers = req.trainers;
+
+  if (!trainers) {
+    res.status(403).send();
+      return;
   }
 
   Articles.update({
@@ -105,7 +104,7 @@ router.delete("/:id", async (req, res, next) => {
   
   const trainers = req.trainers;
 
-  if (!articles) {
+  if (!trainers) {
     res.status(403).send();
       return;
   }

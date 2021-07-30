@@ -3,7 +3,7 @@ const { User } = require('../models');
 var router = express.Router();
 var bcrypt = require('bcrypt');
 var auth = require('../services/auth');
-var authService = require('../services/auth');
+//var authService = require('../services/auth');
 
 
 // POST Trainer
@@ -17,7 +17,7 @@ router.post('/', async (req, res, next) => {
   //hash the pw
 
   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  const hashedpassword = await bcrypt.hash(req.body.password, salt);
 
 
   Trainers.create({
