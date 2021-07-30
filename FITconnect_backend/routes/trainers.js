@@ -35,31 +35,31 @@ router.post('/', async (req, res, next) => {
   });
 });
 
-  //post Signin
-  router.post('/login', async (req, res, next) => {
-     Trainers.findOne({
-      where: {
-        username: req.body.username
-      }
-    }).then(async user => {
-      // check if user exists
-      if (!user) {
-        res.status(404).send('Invalid username');
-        return;
-      }
+//post Signin
+router.post('/login', async (req, res, next) => {
+  Trainers.findOne({
+    where: {
+      username: req.body.username
+    }
+  }).then(async user => {
+    // check if user exists
+    if (!user) {
+      res.status(404).send('Invalid username');
+      return;
+    }
 
-      // check the password
-      const valid = await bcrypt.compare(req.body.password, trainers.password);
+    // check the password
+    const valid = await bcrypt.compare(req.body.password, trainers.password);
 
-      if (valid) {
-        // create the token
-        const jwt = auth.createJWT(user);
-        res.status(200).send({ jwt });
-      } else {
-        res.status(401).send('Invalid password');
-      } 
-    });
+    if (valid) {
+      // create the token
+      const jwt = auth.createJWT(user);
+      res.status(200).send({ jwt });
+    } else {
+      res.status(401).send('Invalid password');
+    }
   });
+});
 
 
-  module.exports = router;
+module.exports = router;
