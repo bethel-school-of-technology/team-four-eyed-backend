@@ -1,8 +1,9 @@
 var express = require('express');
-const { User } = require('../models');
+const { Trainers } = require('../models');
 var router = express.Router();
 var bcrypt = require('bcrypt');
 var auth = require('../services/auth');
+const trainers = require('../models/trainers');
 //var authService = require('../services/auth');
 
 
@@ -32,10 +33,11 @@ router.post('/', async (req, res, next) => {
   }).catch(() => {
     res.status(400).send();
   });
+});
 
   //post Signin
   router.post('/login', async (req, res, next) => {
-    let [result, created] = await User.findOne({
+     Trainers.findOne({
       where: {
         username: req.body.username
       }
@@ -47,7 +49,7 @@ router.post('/', async (req, res, next) => {
       }
 
       // check the password
-      const valid = await bcrypt.compare(req.body.password);
+      const valid = await bcrypt.compare(req.body.password, trainers.password);
 
       if (valid) {
         // create the token
@@ -58,6 +60,6 @@ router.post('/', async (req, res, next) => {
       } 
     });
   });
-});
+
 
   module.exports = router;
