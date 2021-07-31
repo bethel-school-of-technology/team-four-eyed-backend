@@ -8,7 +8,7 @@ const mysql = require('mysql');
 var bcrypt = require('bcrypt');
 var auth = require('./services/auth');
 
-var articlesRouter = require('./routes/articles'); 
+var articlesRouter = require('./routes/articles');
 var trainersRouter = require('./routes/trainers');
 
 var app = express();
@@ -27,19 +27,19 @@ models.sequelize.sync().then(function () {
   console.log("DB Sync'd up")
 });
 
-app.use(async (req,res, next) => {
+app.use(async (req, res, next) => {
   const header = req.headers.authorization;
 
-if (!header) {
-  return next();
-}
+  if (!header) {
+    return next();
+  }
 
-const token = header.split(' ') [1] 
+  const token = header.split(' ')[1]
 
- // validate token / get the user
-const trainers = await auth.verifyUser(token);
-req.trainers= trainers;
-next();
+  // validate token / get the user
+  const trainers = await auth.verifyUser(token);
+  req.trainers = trainers;
+  next();
 
 });
 

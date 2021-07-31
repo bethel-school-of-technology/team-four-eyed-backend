@@ -10,22 +10,22 @@ module.exports = (sequelize, DataTypes) => {
 
   Articles.init({
     articleId: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
       allowNull: false
     },
-      title: {
-      type:DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
       unique: true,
       allowNull: false
     },
     body: {
-      type:DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     trainerId: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   }, {

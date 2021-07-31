@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const { Articles } = require("../models");
-//var auth = require('../services/auth');
+
 
 
 /* GET return all articles */
@@ -109,7 +109,7 @@ router.delete("/:id", async (req, res, next) => {
     return;
   }
 
-  let [result] = await Articles.destroy({
+  let Articles = await Articles.destroy({
     where: { articleId: articleId }
   })
     .then(result => res.redirect('/trainers'))

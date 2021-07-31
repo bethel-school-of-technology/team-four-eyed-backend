@@ -8,14 +8,14 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Trainers.init({
-      trainerId:{
-        type: DataTypes.INTEGER,
-        autoincrement: true,
-        primaryKey: true,
-        allowNull: true
-      },
-      
-      firstName: {
+    trainerId: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: true
+    },
+
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false
     },
