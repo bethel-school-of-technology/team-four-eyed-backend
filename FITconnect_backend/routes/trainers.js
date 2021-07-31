@@ -39,7 +39,6 @@ router.post('/login', async (req, res, next) => {
   Trainers.findOne({
     where: {
       username: req.body.username,
-      //password: hashedpassword
     }
   }).then(async trainers => {
     // check if user exists

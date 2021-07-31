@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
 const { Articles } = require("../models");
+const auth = require('../services/auth');
 
 
 
 /* GET return all articles */
 router.get('/', function (req, res, next) {
+
   Articles.findAll().then(articlelist => {
     res.json({
       status: 200,
@@ -37,23 +39,34 @@ router.get('/:id', (req, res, next) => {
 /* POST create a article */
 router.post('/', async (req, res, next) => {
 
+  // //get token from request
+  // const header = req.headers.authorization;
+
+  // if (!header) {
+  //   res.status(403).send();
+  //   return;
+  // }
+
+  // const token = header.split(' ')[1];
+
+  // //validate token/ get the user
+
   const trainers = req.trainers;
 
   if (!trainers) {
     res.status(403).send();
     return;
   }
+  //create the article with the trainer id
 
-  let [result, created] = await Articles.findOrCreate({
+  Articles.findOrCreate({
     where: {
-      title: req.body.title
-    },
-    defaults: {
+      title: req.body.title,
       body: req.body.body,
-      trainerId: req.body.id
+      trainerId: req.body.trainerId
     }
   })
-  if (created) {
+  if (trainers) {
     res.json({
       status: 200,
       message: "Created Successfully"
