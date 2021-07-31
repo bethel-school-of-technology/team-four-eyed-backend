@@ -7,12 +7,12 @@ module.exports = {
     createJWT: (trainers) => {
         const token = jwt.sign({
             username: trainers.username,
-            id: trainers.id
+            id: trainers.trainerId
         },
-        secretKey,
-        {
-            expiresIn: '1hr'
-        });
+            secretKey,
+            {
+                expiresIn: '1hr'
+            });
 
         return token;
 
@@ -21,8 +21,8 @@ module.exports = {
         try {
             const decodedPayload = jwt.verify(token, secretKey);
             return Trainers.findByPk(decodedPayload.id);
-        }catch (err) {
+        } catch (err) {
             return null;
-    } 
-    }    
-}; 
+        }
+    }
+};

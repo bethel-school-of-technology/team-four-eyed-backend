@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const { Articles } = require("../models");
-//var auth = require('../services/auth');
+
 
 
 /* GET return all articles */

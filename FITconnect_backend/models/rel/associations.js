@@ -3,9 +3,9 @@ module.exports = function (models) {
     {
       foreignKey: 'trainerId'
     });
-    models.Trainers.hasMany(models.Articles,
-      {
-        foreignKey: 'trainerId'
-      });
+  models.Trainers.hasMany(models.Articles,
+    {
+      foreignKey: 'trainerId'
+    });
 
 }

@@ -3,25 +3,16 @@ const { Trainers } = require('../models');
 var router = express.Router();
 var bcrypt = require('bcrypt');
 var auth = require('../services/auth');
-// const trainers = require('../models/trainers');
-//var authService = require('../services/auth');
 
 
 // POST Trainer
 router.post('/', async (req, res, next) => {
 
-  // if (req.body.username || !req.body.password) {
-  //   res.status(400).send('Username and pw required');
-  //   return;
-  // }
-
-  //hash the pw
-
   const salt = await bcrypt.genSalt(10);
   const hashedpassword = await bcrypt.hash(req.body.password, salt);
 
 
-  let [result, created] = await Trainers.create({
+  let [result, created] = await Trainers.findOrCreate({
     where: {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -40,20 +31,12 @@ router.post('/', async (req, res, next) => {
       message: "Conflict creating the profile"
     })
     console.log(result);
-  }})
-  // .then(newTrainer => {
-  //   res.json({
-  //     id: newTrainer.id,
-  //     username: newTrainer.username
-  //   }).catch(() => {
-  //     res.status(400).send("there is no new trainer created")
-  //   })
-  // }); 
-
+  }
+})
 
 //post Signin
-router.get('/login', async (req, res, next) => {
-  let Trainers = await Trainers.findOne({
+router.post('/login', async (req, res, next) => {
+  Trainers.findOne({
     where: {
       username: req.body.username,
       //password: hashedpassword
