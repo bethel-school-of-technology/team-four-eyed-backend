@@ -23,7 +23,7 @@ router.get('/:id', (req, res, next) => {
 
   Articles.findOne({
     where: {
-      id: articleId
+      articleId: articleId
     }
   }).then(theArticle => {
     if (theArticle) {
@@ -38,18 +38,6 @@ router.get('/:id', (req, res, next) => {
 
 /* POST create a article */
 router.post('/', async (req, res, next) => {
-
-  // //get token from request
-  // const header = req.headers.authorization;
-
-  // if (!header) {
-  //   res.status(403).send();
-  //   return;
-  // }
-
-  // const token = header.split(' ')[1];
-
-  // //validate token/ get the user
 
   const trainers = req.trainers;
 
@@ -101,7 +89,7 @@ router.put('/:id', (req, res, next) => {
     body: req.body.body
   }, {
     where: {
-      id: articleId
+      articleId: articleId
     }
   }).then(() => {
     res.status(204).send();
@@ -122,7 +110,7 @@ router.delete("/:id", async (req, res, next) => {
     return;
   }
 
-  let Articles = await Articles.destroy({
+  Articles.destroy({
     where: { articleId: articleId }
   })
     .then(result => res.redirect('/trainers'))

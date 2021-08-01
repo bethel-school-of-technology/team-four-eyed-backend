@@ -7,6 +7,7 @@ var models = require('./models');
 const mysql = require('mysql');
 var bcrypt = require('bcrypt');
 var auth = require('./services/auth');
+var cors = require('cors');
 
 var articlesRouter = require('./routes/articles');
 var trainersRouter = require('./routes/trainers');
@@ -22,6 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(cors());
 
 models.sequelize.sync().then(function () {
   console.log("DB Sync'd up")
