@@ -5,8 +5,19 @@ var bcrypt = require('bcrypt');
 var auth = require('../services/auth');
 
 
+router.get('/', function (req, res, next) {
+
+  Trainers.findAll().then(trainerlist => {
+    res.json({
+      status: 200,
+      message: "Returning all trainers",
+      trainers: trainerlist
+    });
+  })
+});
+
 // POST Trainer
-router.post('/', async (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
 
   const salt = await bcrypt.genSalt(10);
   const hashedpassword = await bcrypt.hash(req.body.password, salt);
@@ -33,6 +44,8 @@ router.post('/', async (req, res, next) => {
     console.log(result);
   }
 })
+
+
 
 //post Signin
 router.post('/login', async (req, res, next) => {

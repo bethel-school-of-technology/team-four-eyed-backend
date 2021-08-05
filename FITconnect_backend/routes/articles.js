@@ -70,7 +70,7 @@ router.post('/', async (req, res, next) => {
 
 /* PUT/:id update a article */
 router.put('/:id', (req, res, next) => {
-  const articleId = parseInt(req.params.id);
+  const articleId = parseInt(req.params.articleId);
 
   if (!articleId || articleId <= 0) {
     res.status(400).send('Invalid ID');
