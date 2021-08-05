@@ -104,6 +104,7 @@ router.put('/:id', (req, res, next) => {
 
 /* DELETE delete a article */
 router.delete("/:id", async (req, res, next) => {
+  console.log(req)
 
   const trainers = req.trainers;
 
@@ -111,11 +112,11 @@ router.delete("/:id", async (req, res, next) => {
     res.status(403).send();
     return;
   }
-
-  Articles.destroy({
-    where: { articleId: articleId }
+console.log(req)
+  await Articles.destroy({
+    where: { articleId:parseInt(req.params.id) }
   })
-    .then(result => res.redirect('/trainers'))
+    .then(result => res.redirect('/articles'))
     .catch(err => {
       res.status(400);
       res.send("There was a problem deleting the article");
