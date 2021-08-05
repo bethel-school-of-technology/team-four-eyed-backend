@@ -16,6 +16,25 @@ router.get('/', function (req, res, next) {
   })
 });
 
+/*GET/:id get individual trainer*/
+router.get('/:id', (req, res, next) => {
+  const trainerId = parseInt(req.params.trainerId);
+
+  Trainers.findOne({
+    where: {
+      trainerId: trainerId
+    }
+  }).then(theTrainers => {
+    if (theTrainers) {
+      res.json(theTrainers);
+    } else {
+      res.status(404).send();
+    }
+  }, err => {
+    res.status(500).send(err);
+  })
+});
+
 // POST Trainer
 router.post('/signup', async (req, res, next) => {
 
