@@ -74,6 +74,7 @@ router.post('/login', async (req, res, next) => {
     }
   }).then(async trainers => {
     // check if user exists
+    console.log(trainers);
     if (!trainers) {
       res.status(404).send('Invalid username');
       return;
@@ -85,7 +86,7 @@ router.post('/login', async (req, res, next) => {
     if (valid) {
       // create the token
       const jwt = auth.createJWT(trainers);
-      res.status(200).send({ jwt });
+      res.status(200).send({ jwt, trainerId: trainers.trainerId });
     } else {
       res.status(401).send('Invalid password');
     }

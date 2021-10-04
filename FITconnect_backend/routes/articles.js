@@ -38,7 +38,7 @@ router.get('/:id', (req, res, next) => {
 
 /* POST create a article */
 router.post('/', async (req, res, next) => {
-
+  console.log('req.body', req.body);
   const trainers = req.trainers;
 
   if (!trainers) {
@@ -47,25 +47,25 @@ router.post('/', async (req, res, next) => {
   }
   //create the article with the trainer id
 
-  Articles.findOrCreate({
-    where: {
-      title: req.body.title,
-      body: req.body.body,
-      trainerId: req.body.trainerId
-    }
-  })
-  if (trainers) {
-    res.json({
-      status: 200,
-      message: "Created Successfully"
+  try {
+    await Articles.findOrCreate({
+      where: {
+        title: req.body.title,
+        body: req.body.body,
+        trainerId: req.body.trainerId
+      }
+    })
+    .then(() => {
+      if (trainers) {
+        res.json({
+          status: 200,
+          message: "Created Successfully"
+        });
+      }
     });
-  } else {
-    res.json({
-      status: 400,
-      message: "Conflict creating the article"
-    });
+  } catch (e) {
+    res.send(400);
   }
-  console.log(result);
 })
 
 /* PUT/:id update a article */
